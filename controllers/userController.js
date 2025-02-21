@@ -1,4 +1,5 @@
 const { register } = require('../services/userService');
+const errorParser = require('../utils/errorParser');
 
 const userController = require('express').Router();
 
@@ -17,7 +18,10 @@ userController.post('/register', async (req, res) => {
         const result = await register(email, username, password)
         res.status(201).json(result)
     } catch (err) {
-        res.status(404).json({ error: err.message })
+        console.log(err.name);
+        console.log(err.message);
+        
+        res.status(404).json({ message: errorParser(err) })
     }
 
 });

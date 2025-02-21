@@ -5,7 +5,10 @@ const emailPattern = /^[a-z0-9]+@[a-z]+\.[a-z]{2,}$/i
 const userSchema = new Schema({
     email: {
         type: String,
-        validate: emailPattern,
+        validate: {
+            validator: (value) => emailPattern.test(value),
+            message: 'Email must be a valid email address!'
+        },
         required: true
     },
     username: {

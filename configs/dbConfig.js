@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-require('dotenv').config()
-
 
 module.exports = async (app, MONGODB_CONNECTION) => {
     try {
