@@ -15,21 +15,31 @@ async function register(email, username, password) {
     const user = await User.create({ email, username, password: hashedPassword });
     const token = createToken({ _id: user._id, email: user.email, username: user.username });
 
-    return { email, username, accessToken: token };
+    return { _id: user._id, email, username, accessToken: token };
 }
 
-async function login() {
-    const match = await bcrypt.compare(password, exist.password)
+async function login(email, password) {
+    const user = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+    if (!user) {
+        throw new Error('Invalid email or password!')
+    }
+    const match = await bcrypt.compare(password, user.password)
 
     if (!match) {
         throw new Error('Invalid email or password!')
     }
+
+    const token = createToken({ _id: user._id, email: user.email, username: user.username });
+
+    return { _id: user._id, email: user.email, username: user.username, accessToken: token };
+
 }
 
-function createToken(userData) {
-    return jwt.sign(userData, JWT_SECRET)
+function createToken(payload) {
+    return jwt.sign(payload, JWT_SECRET)
 }
 
 module.exports = {
     register,
+    login
 }
