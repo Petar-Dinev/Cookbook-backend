@@ -1,0 +1,1 @@
+Under development. This repository will contain the back-end code of the cookbook application for users who love to cook. To share their own recipes and to view, like and favorite other users' recipes for future use. It will be built using the express library to build the back-end server and a MongoDB database to store users and recipes.
