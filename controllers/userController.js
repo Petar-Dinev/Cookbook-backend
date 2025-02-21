@@ -21,7 +21,7 @@ userController.post('/register', async (req, res) => {
         console.log(err.name);
         console.log(err.message);
         
-        res.status(404).json({ message: errorParser(err) })
+        res.status(400).json({ message: errorParser(err) })
     }
 
 });
