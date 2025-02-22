@@ -1,4 +1,4 @@
-const { register, login } = require('../services/userService');
+const { register, login, logout } = require('../services/userService');
 const errorParser = require('../utils/errorParser');
 
 const userController = require('express').Router();
@@ -27,7 +27,7 @@ userController.post('/register', async (req, res) => {
 });
 
 userController.get('/logout', (req, res) => {
-    console.log(req.headers);
+    logout(req.token);
     res.status(200).json({ message: 'Logout was successful' })
 })
 

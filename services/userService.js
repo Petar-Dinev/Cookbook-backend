@@ -5,6 +5,8 @@ require('dotenv').config()
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+const tokenBlacklist = new Set();
+
 async function register(email, username, password) {
     const exist = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
 
@@ -35,11 +37,24 @@ async function login(email, password) {
 
 }
 
+function logout(token) {
+    tokenBlacklist.add(token);
+}
+
 function createToken(payload) {
     return jwt.sign(payload, JWT_SECRET)
 }
 
+function verifyToken(token) {
+    if (tokenBlacklist.has(token)) {
+        throw new Error('Token is blacklisted');
+    }
+    return jwt.verify(token, JWT_SECRET);
+}
+
 module.exports = {
     register,
-    login
+    login,
+    logout,
+    verifyToken
 }
