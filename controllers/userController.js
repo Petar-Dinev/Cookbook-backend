@@ -1,9 +1,10 @@
+const { isGuest, hasUser } = require('../middlewares/guards');
 const { register, login, logout } = require('../services/userService');
 const errorParser = require('../utils/errorParser');
 
 const userController = require('express').Router();
 
-userController.post('/login', async (req, res) => {
+userController.post('/login', isGuest(), async (req, res) => {
     const { email, password } = req.body;
     console.log(email, password);
     try {
@@ -14,7 +15,7 @@ userController.post('/login', async (req, res) => {
     }
 });
 
-userController.post('/register', async (req, res) => {
+userController.post('/register', isGuest(), async (req, res) => {
 
     const { email, username, password } = req.body;
     try {
@@ -26,7 +27,7 @@ userController.post('/register', async (req, res) => {
 
 });
 
-userController.get('/logout', (req, res) => {
+userController.get('/logout', hasUser(), (req, res) => {
     logout(req.token);
     res.status(200).json({ message: 'Logout was successful' })
 })

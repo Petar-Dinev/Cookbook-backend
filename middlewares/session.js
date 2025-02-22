@@ -1,5 +1,4 @@
 const { verifyToken } = require("../services/userService");
-const errorParser = require("../utils/errorParser");
 
 module.exports = () => (req, res, next) => {
     const token = req.headers['p-authorization'];
