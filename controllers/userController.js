@@ -1,12 +1,11 @@
-const { isGuest, hasUser } = require('../middlewares/guards');
-const { register, login, logout } = require('../services/userService');
+const { isGuest } = require('../middlewares/guards');
+const { register, login } = require('../services/userService');
 const errorParser = require('../utils/errorParser');
 
 const userController = require('express').Router();
 
 userController.post('/login', isGuest(), async (req, res) => {
     const { email, password } = req.body;
-    console.log(email, password);
     try {
         const result = await login(email, password)
         res.status(200).json(result)
@@ -26,10 +25,5 @@ userController.post('/register', isGuest(), async (req, res) => {
     }
 
 });
-
-userController.get('/logout', hasUser(), (req, res) => {
-    logout(req.token);
-    res.status(200).json({ message: 'Logout was successful' })
-})
 
 module.exports = userController;

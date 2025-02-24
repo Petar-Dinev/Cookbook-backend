@@ -1,7 +1,24 @@
-module.exports = () => (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS, HEADERS, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-type')
+const allowedOrigins = [
+    'http://localhost:5173', //vite
+    'http://localhost:3000', //CRA
+    // process.env.FRONTEND_URL // Vercel
+];
 
-    next()
+module.exports = () => (req, res, next) => {
+
+
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, HEADERS, GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-type, Authorization');
+
+    if (req.method == 'OPTIONS') {
+        res.sendStatus(204);
+    }
+
+    next();
 }

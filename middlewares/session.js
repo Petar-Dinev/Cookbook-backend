@@ -1,7 +1,7 @@
 const { verifyToken } = require("../services/userService");
 
 module.exports = () => (req, res, next) => {
-    const token = req.headers['p-authorization'];
+    const token = req.headers['authorization'];
 
     if (token) {
         try {
@@ -9,8 +9,6 @@ module.exports = () => (req, res, next) => {
             req.user = userData;
             req.token = token;
         } catch (err) {
-            console.log(err);
-            
             return res.status(403).json({ message: 'Invalid authorization token!' })
         }
     }

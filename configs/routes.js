@@ -4,8 +4,8 @@ const userController = require('../controllers/userController');
 const mainRouter = require('express').Router();
 
 module.exports = (app) => {
-    mainRouter.use('/', homeController)
-    mainRouter.use('/users', userController)
+    mainRouter.use('/api', homeController)
+    mainRouter.use('/api/users', userController)
     app.use(mainRouter)
 }
 
