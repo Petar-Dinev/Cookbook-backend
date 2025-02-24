@@ -1,28 +1,31 @@
 const { Schema, model } = require('mongoose');
 
-const emailPattern = /^[a-z0-9]+@[a-z]+\.[a-z]{2,}$/i
+const emailPattern = /^[a-z0-9]+@[a-z]+\.[a-z]{2,}$/i;
 
 const userSchema = new Schema({
     email: {
         type: String,
+        required: [true, 'Email is required'],
         validate: {
             validator: (value) => emailPattern.test(value),
             message: 'Email must be a valid email address!'
         },
-        required: true
+        trim: true
     },
     username: {
         type: String,
+        required: [true, 'Username is required'],
         minLength: [3, 'Username must be at least 3 characters long'],
-        required: true
+        trim: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Password is required'],
+        trim: true
     }
-})
+}, { timestamps: true });
 
-userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } })
+userSchema.index({ email: 1 }, { collation: { locale: 'en', strength: 2 } });
 
 const User = model('User', userSchema);
 
