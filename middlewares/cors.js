@@ -6,7 +6,6 @@ const allowedOrigins = [
 
 module.exports = () => (req, res, next) => {
 
-
     const origin = req.headers.origin;
 
     if (allowedOrigins.includes(origin)) {

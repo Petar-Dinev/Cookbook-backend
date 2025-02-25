@@ -10,12 +10,12 @@ const MONGODB_CONNECTION = process.env.MONGODB_CONNECTION;
 start()
 
 async function start() {
-    const app = express()
+    const app = express();
 
-    dbConfig(app, MONGODB_CONNECTION)
-    expressConfig(app)
-    routesConfig(app)
+    await dbConfig(app, MONGODB_CONNECTION);
+    expressConfig(app);
+    routesConfig(app);
 
-    app.listen(PORT, () => console.log(`Server listen at port ${PORT}...`))
+    app.listen(PORT, () => console.log(`Server listen at port ${PORT}...`));
 }
 

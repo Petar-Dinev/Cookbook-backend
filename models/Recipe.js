@@ -5,6 +5,7 @@ const imageUrlPattern = /^https?:\/\/.+/i
 const recipeSchema = new Schema({
     title: {
         type: String,
+        unique: true,
         required: [true, 'Title is required'],
         minLength: [4, 'Recipe title must be at least 4 characters long'],
         trim: true
