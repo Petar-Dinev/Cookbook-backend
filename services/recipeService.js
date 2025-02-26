@@ -1,7 +1,7 @@
 const Recipe = require('../models/Recipe');
 
 async function getAllRecipes() {
-    return Recipe.find({});
+    return (await Recipe.find({})).toSorted({ createdAt: -1 });
 }
 
 async function getOneRecipeById(recipeId) {
@@ -9,30 +9,48 @@ async function getOneRecipeById(recipeId) {
 }
 
 async function createRecipe(recipeData) {
-    return await Recipe.create(recipeData);
+    return Recipe.create(recipeData);
 }
 
 async function updateRecipe(recipeId, recipeData) {
-    const recipe = Recipe.findById(recipeId);
+    const recipe = await Recipe.findById(recipeId);
+
+    checkRecipe(recipe);
 
     recipe.title = recipeData.title;
     recipe.category = recipeData.category;
     recipe.imageUrl = recipeData.imageUrl;
     recipe.description = recipeData.description;
     recipe.ingredients = recipeData.ingredients;
-    recipe.title = recipeData.title;
 
-    return await recipe.save();
+    return recipe.save();
 }
 
 async function deleteRecipe(recipeId) {
+    const recipe = await Recipe.findById(recipeId);
+
+    checkRecipe(recipe);
+
     return Recipe.findByIdAndDelete(recipeId);
 }
 
 async function likeRecipe(recipeId, userId) {
     const recipe = await Recipe.findById(recipeId);
+
+    checkRecipe(recipe);
+
+    if (recipe.likes.some(id => id.toString() == userId.toString())) {
+        throw new Error('You can like recipe once!');
+    }
+
     recipe.likes.push(userId);
-    return await recipe.save();
+    return recipe.save();
+}
+
+function checkRecipe(recipe) {
+    if (!recipe) {
+        throw new Error('Recipe not found');
+    }
 }
 
 module.exports = {
