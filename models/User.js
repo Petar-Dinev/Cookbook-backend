@@ -6,7 +6,6 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        unique: true,
         validate: {
             validator: (value) => emailPattern.test(value),
             message: 'Email must be a valid email address!'
