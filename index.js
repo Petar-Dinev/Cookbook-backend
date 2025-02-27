@@ -5,7 +5,7 @@ const dbConfig = require('./configs/dbConfig');
 
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
-const MONGODB_CONNECTION = process.env.MONGODB_CONNECTION;
+const MONGODB_CONNECTION = process.env.MONGODB_CONNECTION || "mongodb://127.0.0.1:27017/cook-book";
 
 start()
 

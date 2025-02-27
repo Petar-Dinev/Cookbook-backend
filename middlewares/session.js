@@ -1,9 +1,11 @@
 const { verifyToken } = require("../services/userService");
 
 module.exports = () => (req, res, next) => {
-    const token = req.headers['authorization'];
+    const authHeader = req.headers['authorization'];
 
-    if (token) {
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
+        
         try {
             const userData = verifyToken(token);
             req.user = userData;

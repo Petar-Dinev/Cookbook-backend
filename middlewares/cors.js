@@ -1,7 +1,7 @@
 const allowedOrigins = [
     'http://localhost:5173', //vite
     'http://localhost:3000', //CRA
-    // process.env.FRONTEND_URL // Vercel
+    process.env.FRONTEND_URL // Vercel
 ];
 
 module.exports = () => (req, res, next) => {
@@ -16,7 +16,7 @@ module.exports = () => (req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-type, Authorization');
 
     if (req.method == 'OPTIONS') {
-        res.sendStatus(204);
+        return res.sendStatus(204);
     }
 
     next();
