@@ -1,7 +1,7 @@
 const allowedOrigins = [
     'http://localhost:5173', //vite
     'http://localhost:3000', //CRA
-    process.env.FRONTEND_URL // Vercel
+    // process.env.FRONTEND_URL // Vercel
 ];
 
 module.exports = () => (req, res, next) => {

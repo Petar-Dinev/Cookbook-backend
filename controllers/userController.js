@@ -24,6 +24,9 @@ userController.post('/register', isGuest(), async (req, res) => {
         if (!email || !username || !password) {
             throw new Error('All fields are required');
         }
+        if (password.length < 6) {
+            throw new Error('Password must be at least 6 characters long');
+        }
         const result = await register(email, username, password);
         res.status(201).json(result);
     } catch (err) {
