@@ -13,7 +13,7 @@ function hasUser() {
         if (req.user) {
             return next();
         } else {
-            return res.status(401).json({ message: 'Pls log in to access this resource!' });
+            return res.status(401).json({ message: 'Pls log in!' });
         }
     }
 }

@@ -35,4 +35,8 @@ userController.post('/register', isGuest(), async (req, res) => {
 
 });
 
+userController.post('/logout', (req, res) => {
+    res.status(204).end();
+});
+
 module.exports = userController;
